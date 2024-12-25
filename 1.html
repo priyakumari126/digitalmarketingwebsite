@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Byte Minders</title>
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 30px;
+        }
+
+        .navbar a {
+            margin-left: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ff5722;
+        }
+
+        /* Logo with Moving Leaf Around Title */
+        .logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin-right: auto;
+        }
+
+        .logo-leaf {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4caf50, #81c784);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: rotateLeafAround 3s infinite linear;
+        }
+
+        @keyframes rotateLeafAround {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateX(40px) rotate(90deg);
+            }
+            50% {
+                transform: translateX(0) rotate(180deg);
+            }
+            75% {
+                transform: translateX(-40px) rotate(270deg);
+            }
+            100% {
+                transform: translateX(0) rotate(360deg);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 128, 128, 0.8), rgba(60, 179, 113, 0.8));
+            color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            animation: fadeIn 2s;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            animation: slideInDown 1.5s;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            animation: slideInUp 1.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 40px 20px;
+            background: #f4f4f4;
+            text-align: center;
+            animation: fadeInLeft 1.5s;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Packages Section */
+        .packages-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: #fff;
+            animation: fadeInRight 1.5s;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .packages {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .package {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .package:hover {
+            transform: scale(1.05);
+        }
+
+        .package h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .package .price {
+            font-size: 1.8rem;
+            color: #ff5722;
+            margin: 15px 0;
+        }
+
+        .package .btn-secondary {
+            background: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .package .btn-secondary:hover {
+            background: #45a049;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 40px 20px;
+            background: #f9f9f9;
+            text-align: center;
+            animation: zoomIn 1.5s;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .testimonial {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 70%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .testimonial.active {
+            display: block;
+            animation: fadeInUp 1s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .testimonial-buttons {
+            margin-top: 20px;
+        }
+
+        .testimonial-button {
+            background: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background 0.3s ease;
+        }
+
+        .testimonial-button:hover {
+            background: #45a049;
+        }
+
+        .faq-item {
+            margin: 20px 0;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-toggle {
+            text-align: center;
+            display: none; /* Hide the checkbox */
+        }
+
+        .faq-toggle + label {
+            cursor: pointer;
+            display: block;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .faq-item p {
+            display: none; /* Hide the answer initially */
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .faq-toggle:checked + label + p {
+            display: block; /* Show the answer when the checkbox is checked */
+        }
+
+        /* Footer */
+        .footer {
+            padding: 20px;
+            background: #333;
+            color: #fff;
+            text-align: center;
+        }
+
+        .footer h2 {
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            color: #ff5722;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .social-icon {
+            color: #ff5722;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: transform 0.3s, color 0.3s ease-in-out;
+        }
+
+        .social-icon:hover {
+            color: #4caf50;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-leaf"></div> Byte Minders
+        </div>
+        <a href="#about">About</a>
+        <a href="#packages">Packages</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>Learn Website Development & Designing</h1>
+        <p>Step into the world of creative web solutions with us!</p>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <h2>About Us</h2>
+        <p>We provide hands-on learning experiences in web development and digital marketing, tailored for all levels.</p>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="packages-section">
+        <h2>Our Packages</h2>
+        <div class="packages">
+            <div class="package">
+                <h3>Beginner</h3>
+                <p>Learn the basics of web development and marketing.</p>
+                <p class="price">$50/month</p>
+                <a href="#contact" class="btn-secondary">Sign Up</a>
+            </div>
+            <div class="package">
+                <h3>Intermediate</h3>
+                <p>Advance your skills with hands-on projects.</p>
+                <p class="price">$100/month</p>
+                <a href="#contact" class="btn-secondary">Sign Up</a>
+            </div>
+            <div class="package">
+                <h3>Professional</h3>
+                <p>Master web development and marketing with real-world tasks.</p>
+                <p class="price">$200/month</p>
+                <a href="#contact" class="btn-secondary">Sign Up</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <h2>What Our Clients Say</h2>
+        <div id="testimonial1" class="testimonial active">
+            <p>"The Pro Plan was a game-changer for our business! Strategies helped us grow exponentially."</p>
+            <h4>- John Doe</h4>
+        </div>
+        <div id="testimonial2" class="testimonial">
+            <p>"The team is knowledgeable, responsive, and dedicated to client success."</p>
+            <h4>- Sarah Smith</h4>
+        </div>
+        <div id="testimonial3" class="testimonial">
+            <p>"Byte Minders offers the best online resources for web development! Highly recommend it."</p>
+            <h4>- Emily Davis</h4>
+        </div>
+        <div id="testimonial4" class="testimonial">
+            <p>"Learning here has been a wonderful journey. The instructors are top-notch!"</p>
+            <h4>- Michael Lee</h4>
+        </div>
+        <div class="testimonial-buttons">
+            <button class="testimonial-button" onclick="showTestimonial('prev')">Previous</button>
+            <button class="testimonial-button" onclick="showTestimonial('next')">Next</button>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <h2 style="text-align: center;">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <input type="checkbox" id="faq1" class="faq-toggle" />
+            <label for="faq1">
+                <h3>What is included in the courses?</h3>
+            </label>
+            <p>Each course includes video tutorials, downloadable resources, and live support sessions.</p>
+        </div>
+
+        <div class="faq-item">
+            <input type="checkbox" id="faq2" class="faq-toggle" />
+            <label for="faq2">
+                <h3>Do I need prior experience?</h3>
+            </label>
+            <p>No, our beginner package is designed for absolute newcomers.</p>
+        </div>
+
+        <div class="faq-item">
+            <input type="checkbox" id="faq3" class="faq-toggle" />
+            <label for="faq3">
+                <h3>What payment options are available?</h3>
+            </label>
+            <p>We accept credit cards, PayPal, and bank transfers.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <h2>Contact Us</h2>
+        <p>Email: support@learnweb.com</p>
+        <p>Phone: +123-456-7890</p>
+        <div class="social-links">
+            <a href="#" class="social-icon">🐦 Twitter</a>
+            <a href="#" class="social-icon">📷 Instagram</a>
+            <a href="#" class="social-icon">🔗 LinkedIn</a>
+            <a href="#" class="social-icon">👍 Facebook</a>
+        </div>
+    </footer>
+</body>
+</html>
